@@ -8,7 +8,8 @@ public partial class MainPage : ContentPage
     char[] vowelsArray;
     string name;
     string name2;
-
+    char[] loveArray;
+    char[] alphabet;
 
 
 
@@ -48,10 +49,11 @@ public partial class MainPage : ContentPage
         return result;
     }
 
-    private void CalculateMatch(object sender, EventArgs e)
+
+    private void CalculateMatchByAsciiValue(object sender, EventArgs e)
     {
         int difference;
-        
+
         string name = firstnamefield.Text;
         string name2 = secondnamefield.Text;
 
@@ -60,29 +62,87 @@ public partial class MainPage : ContentPage
 
         if (AsciiValueName1 > AsciiValueName2)
         {
-             difference = AsciiValueName1 - AsciiValueName2;
+            difference = AsciiValueName1 - AsciiValueName2;
         }
         else
         {
-             difference = AsciiValueName2 - AsciiValueName1;
+            difference = AsciiValueName2 - AsciiValueName1;
         }
         int hundredDifference = 100 - difference;
-
-        /*
-        vowelsArray = new char[] { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' };
-
-        int numberOfVowelsName1 = CountChars(name, vowelsArray, false);
-        int numberOfVowelsName2 = CountChars(name2, vowelsArray, false);
-
-        int numberOfConstantsName1 = CountChars(name, vowelsArray, true);
-        int numberOfConstantsName2 = CountChars(name2, vowelsArray, true);
-
-        int numberOfLoveName1 = CountChars(name, loveArray, false);
-        */
-
-        //TxtResult.Text = "Button pushed";
         string result = hundredDifference.ToString();
         TxtResult.Text = result;
+    }
+    private void CalculateMatch(object sender, EventArgs e)
+    {
+        int points = 0;
+        string name = firstnamefield.Text;
+        string name2 = secondnamefield.Text;
+        name = name.ToLower();
+        name2 = name2.ToLower();
+        string name1FirstChar = name.Substring(0, 1);
+        string name2FirstChar = name2.Substring(0, 1);
+        alphabet = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+        vowelsArray = new char[] { 'a', 'e', 'i', 'o', 'u'};
+        loveArray = new char[] { 'l', 'o', 'v', 'e' };
+
+
+        int isName1FirstLetterAVowel = CountChars(name1FirstChar, vowelsArray, false);
+        int isName2FirstLetterAVowel = CountChars(name2FirstChar, vowelsArray, false);
+        if (isName1FirstLetterAVowel == isName2FirstLetterAVowel)
+        {
+            points = points + 10;
+        }
+
+        int isName1FirstLetterAConstant = CountChars(name1FirstChar, vowelsArray, true);
+        int isName2FirstLetterAConstant = CountChars(name2FirstChar, vowelsArray, true);
+        if ( isName1FirstLetterAConstant == isName2FirstLetterAConstant)
+        {
+            points = points + 10;
+        }
+
+
+        int numberOfLettersName1 = CountChars(name, alphabet, false);
+        int numberOfLettersName2 = CountChars(name2, alphabet, false);
+        if (numberOfLettersName1 == numberOfLettersName2)
+        {
+            points = points + 20;
+        }
+
+        int numberOfVowelsName1 = CountChars(name, vowelsArray, false); //klinkers
+        int numberOfVowelsName2 = CountChars(name2, vowelsArray, false);
+        if (numberOfVowelsName1 == numberOfVowelsName2)
+        {
+            points = points + 20;
+        }
+
+        int numberOfConstantsName1 = CountChars(name, vowelsArray, true); //medeklinkers
+        int numberOfConstantsName2 = CountChars(name2, vowelsArray, true);
+        if (numberOfConstantsName1 == numberOfConstantsName2)
+        {
+            points = points + 20;
+        }
+
+        int numberOfLoveName1 = CountChars(name, loveArray, false);
+        int numberOfLoveName2 = CountChars(name2, loveArray, false);
+
+        if (numberOfLoveName1 != 0) {
+            numberOfLoveName1 = numberOfLoveName1 * 5;
+            points = points + numberOfLoveName1;
+        }
+        if (numberOfLoveName2 != 0)
+        {
+            numberOfLoveName2 = numberOfLoveName2 * 5;
+            points = points + numberOfLoveName2;
+        }
+
+
+
+
+        //TxtResult.Text = "Button pushed";
+        string result = points.ToString();
+        TxtResult.Text = result;
+        //TxtResult.Text = "result";
+
     }
 
     //private void OnCounterClicked(object sender, EventArgs e)
