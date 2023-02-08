@@ -13,7 +13,14 @@
                 Source="hart.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 HeightRequest="200"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" 
+                Background="Orange"/>
+            <Image Source="hart.svg" 
+                   Background="blue"/>
+
+
+
+
 
             <Label
                 Text="Enter 2 names."

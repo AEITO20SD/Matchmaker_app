@@ -74,19 +74,20 @@ public partial class MainPage : ContentPage
         TxtResult.Text = result;
     }
 
-    private async Task WaitTimeAsync()
-    {
-        await progressbar.ProgressTo(1, 500, Easing.Linear);
-    }
     double CustomEase(double t)
     {
         return t == 0 || t == 1 ? t : (int)(5 * t) / 5.0;
     }
     private async void CalculateMatch(object sender, EventArgs e)
     {
+        TxtResult.Text = "";
+        await progressbar.ProgressTo(0, 0, Easing.Default );
+        Random rnd = new Random();
+        int random = rnd.Next(1000, 3000);
 
-       
-        await progressbar.ProgressTo(1, 2000, (Easing)CustomEase);
+        await progressbar.ProgressTo(0.5, (uint)random, (Easing)CustomEase);
+        Thread.Sleep(500);
+        await progressbar.ProgressTo(1, (uint)random, (Easing)CustomEase);
 
         int points = 0;
         string name = firstnamefield.Text;
@@ -95,7 +96,6 @@ public partial class MainPage : ContentPage
         name2 = name2.ToLower();
         string name1FirstChar = name.Substring(0, 1);
         string name2FirstChar = name2.Substring(0, 1);
-        alphabet = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
         vowelsArray = new char[] { 'a', 'e', 'i', 'o', 'u'};
         loveArray = new char[] { 'l', 'o', 'v', 'e' };
 
@@ -115,8 +115,8 @@ public partial class MainPage : ContentPage
         }
 
 
-        int numberOfLettersName1 = CountChars(name, alphabet, false);
-        int numberOfLettersName2 = CountChars(name2, alphabet, false);
+        int numberOfLettersName1 = name.Count();
+        int numberOfLettersName2 = name2.Count();
         if (numberOfLettersName1 == numberOfLettersName2)
         {
             points = points + 20;
