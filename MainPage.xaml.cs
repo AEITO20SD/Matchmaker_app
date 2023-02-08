@@ -4,6 +4,7 @@ namespace Matchmaker_app;
 
 public partial class MainPage : ContentPage
 {
+
     int points;
     char[] vowelsArray;
     string name;
@@ -72,8 +73,21 @@ public partial class MainPage : ContentPage
         string result = hundredDifference.ToString();
         TxtResult.Text = result;
     }
-    private void CalculateMatch(object sender, EventArgs e)
+
+    private async Task WaitTimeAsync()
     {
+        await progressbar.ProgressTo(1, 500, Easing.Linear);
+    }
+    double CustomEase(double t)
+    {
+        return t == 0 || t == 1 ? t : (int)(5 * t) / 5.0;
+    }
+    private async void CalculateMatch(object sender, EventArgs e)
+    {
+
+       
+        await progressbar.ProgressTo(1, 2000, (Easing)CustomEase);
+
         int points = 0;
         string name = firstnamefield.Text;
         string name2 = secondnamefield.Text;
@@ -134,27 +148,8 @@ public partial class MainPage : ContentPage
             numberOfLoveName2 = numberOfLoveName2 * 5;
             points = points + numberOfLoveName2;
         }
-
-
-
-
-        //TxtResult.Text = "Button pushed";
         string result = points.ToString();
         TxtResult.Text = result;
-        //TxtResult.Text = "result";
-
     }
-
-    //private void OnCounterClicked(object sender, EventArgs e)
-    //{
-    //count++;
-
-    //if (count == 1)
-    //CounterBtn.Text = $"Clicked {count} time";
-    //else
-    //CounterBtn.Text = $"Clicked {count} times";
-
-    //SemanticScreenReader.Announce(CounterBtn.Text);
-    //	}
 }
 

@@ -10,13 +10,13 @@
             VerticalOptions="Center">
 
             <Image
-                Source="dotnet_bot.png"
+                Source="hart.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 HeightRequest="200"
                 HorizontalOptions="Center" />
 
             <Label
-                Text="Enter your First and last name"
+                Text="Enter 2 names."
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
@@ -45,12 +45,6 @@
   Text=""
                />
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
 
             <Button
                 x:Name="BtnCalculateMatch"
@@ -58,6 +52,12 @@
                 SemanticProperties.Hint="Calculate how compatible"
                 Clicked="CalculateMatch"
                 HorizontalOptions="Center" />
+
+            <ProgressBar 
+                x:Name="progressbar"
+                         ProgressColor="Red"
+                         
+                         />
 
             <Label
                 x:Name="TxtResult"
