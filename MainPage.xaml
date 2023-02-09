@@ -10,13 +10,9 @@
             VerticalOptions="Center">
 
             <Image
-                Source="hart.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                Source="heartsymbol.png"
                 HeightRequest="200"
-                HorizontalOptions="Center" 
-                Background="Orange"/>
-            <Image Source="hart.svg" 
-                   Background="blue"/>
+                HorizontalOptions="Center"/>
 
 
 
@@ -65,13 +61,21 @@
                          ProgressColor="Red"
                          
                          />
+            <VerticalStackLayout>
+            <Image
+                Source="heartsymbol.png"
+                x:Name="hartsymbol"
+                HeightRequest="0"
+                HorizontalOptions="Center"/>
 
             <Label
                 x:Name="TxtResult"
+                Margin="0, -80 , 0 , 80"
                 Text=""
                 FontSize="32"
                 HorizontalOptions="Center"
                 />
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

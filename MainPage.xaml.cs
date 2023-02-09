@@ -148,6 +148,8 @@ public partial class MainPage : ContentPage
             numberOfLoveName2 = numberOfLoveName2 * 5;
             points = points + numberOfLoveName2;
         }
+
+        hartsymbol.HeightRequest = points + 50;
         string result = points.ToString();
         TxtResult.Text = result;
     }
