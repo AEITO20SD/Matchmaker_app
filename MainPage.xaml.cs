@@ -61,6 +61,7 @@ public partial class MainPage : ContentPage
         int AsciiValueName1 = GetAsciiValue(name);
         int AsciiValueName2 = GetAsciiValue(name2);
 
+
         if (AsciiValueName1 > AsciiValueName2)
         {
             difference = AsciiValueName1 - AsciiValueName2;
@@ -78,80 +79,93 @@ public partial class MainPage : ContentPage
     {
         return t == 0 || t == 1 ? t : (int)(5 * t) / 5.0;
     }
+
+    
     private async void CalculateMatch(object sender, EventArgs e)
     {
         TxtResult.Text = "";
-        await progressbar.ProgressTo(0, 0, Easing.Default );
-        Random rnd = new Random();
-        int random = rnd.Next(1000, 3000);
-
-        await progressbar.ProgressTo(0.5, (uint)random, (Easing)CustomEase);
-        Thread.Sleep(500);
-        await progressbar.ProgressTo(1, (uint)random, (Easing)CustomEase);
-
-        int points = 0;
         string name = firstnamefield.Text;
         string name2 = secondnamefield.Text;
-        name = name.ToLower();
-        name2 = name2.ToLower();
-        string name1FirstChar = name.Substring(0, 1);
-        string name2FirstChar = name2.Substring(0, 1);
-        vowelsArray = new char[] { 'a', 'e', 'i', 'o', 'u'};
-        loveArray = new char[] { 'l', 'o', 'v', 'e' };
-
-
-        int isName1FirstLetterAVowel = CountChars(name1FirstChar, vowelsArray, false);
-        int isName2FirstLetterAVowel = CountChars(name2FirstChar, vowelsArray, false);
-        if (isName1FirstLetterAVowel == isName2FirstLetterAVowel)
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(name2))
         {
-            points = points + 10;
+            error_label.Text = "invalid name";
         }
-
-        int isName1FirstLetterAConstant = CountChars(name1FirstChar, vowelsArray, true);
-        int isName2FirstLetterAConstant = CountChars(name2FirstChar, vowelsArray, true);
-        if ( isName1FirstLetterAConstant == isName2FirstLetterAConstant)
+        else
         {
-            points = points + 10;
+
+            error_label.Text = "";
+            await progressbar.ProgressTo(0, 0, Easing.Default);
+            Random rnd = new Random();
+            int random = rnd.Next(1000, 3000);
+
+            await progressbar.ProgressTo(0.5, (uint)random, (Easing)CustomEase);
+            Thread.Sleep(500);
+            await progressbar.ProgressTo(1, (uint)random, (Easing)CustomEase);
+
+            int points = 0;
+
+            name = name.ToLower();
+            name2 = name2.ToLower();
+            string name1FirstChar = name.Substring(0, 1);
+            string name2FirstChar = name2.Substring(0, 1);
+            vowelsArray = new char[] { 'a', 'e', 'i', 'o', 'u' };
+            loveArray = new char[] { 'l', 'o', 'v', 'e' };
+
+
+            int isName1FirstLetterAVowel = CountChars(name1FirstChar, vowelsArray, false);
+            int isName2FirstLetterAVowel = CountChars(name2FirstChar, vowelsArray, false);
+            if (isName1FirstLetterAVowel == isName2FirstLetterAVowel)
+            {
+                points = points + 10;
+            }
+
+            int isName1FirstLetterAConstant = CountChars(name1FirstChar, vowelsArray, true);
+            int isName2FirstLetterAConstant = CountChars(name2FirstChar, vowelsArray, true);
+            if (isName1FirstLetterAConstant == isName2FirstLetterAConstant)
+            {
+                points = points + 10;
+            }
+
+
+            int numberOfLettersName1 = name.Count();
+            int numberOfLettersName2 = name2.Count();
+            if (numberOfLettersName1 == numberOfLettersName2)
+            {
+                points = points + 20;
+            }
+
+            int numberOfVowelsName1 = CountChars(name, vowelsArray, false); //klinkers
+            int numberOfVowelsName2 = CountChars(name2, vowelsArray, false);
+            if (numberOfVowelsName1 == numberOfVowelsName2)
+            {
+                points = points + 20;
+            }
+
+            int numberOfConstantsName1 = CountChars(name, vowelsArray, true); //medeklinkers
+            int numberOfConstantsName2 = CountChars(name2, vowelsArray, true);
+            if (numberOfConstantsName1 == numberOfConstantsName2)
+            {
+                points = points + 20;
+            }
+
+            int numberOfLoveName1 = CountChars(name, loveArray, false);
+            int numberOfLoveName2 = CountChars(name2, loveArray, false);
+
+            if (numberOfLoveName1 != 0)
+            {
+                numberOfLoveName1 = numberOfLoveName1 * 5;
+                points = points + numberOfLoveName1;
+            }
+            if (numberOfLoveName2 != 0)
+            {
+                numberOfLoveName2 = numberOfLoveName2 * 5;
+                points = points + numberOfLoveName2;
+            }
+
+            hartsymbol.HeightRequest = points + 50;
+            string result = points.ToString();
+            TxtResult.Text = result;
         }
-
-
-        int numberOfLettersName1 = name.Count();
-        int numberOfLettersName2 = name2.Count();
-        if (numberOfLettersName1 == numberOfLettersName2)
-        {
-            points = points + 20;
-        }
-
-        int numberOfVowelsName1 = CountChars(name, vowelsArray, false); //klinkers
-        int numberOfVowelsName2 = CountChars(name2, vowelsArray, false);
-        if (numberOfVowelsName1 == numberOfVowelsName2)
-        {
-            points = points + 20;
-        }
-
-        int numberOfConstantsName1 = CountChars(name, vowelsArray, true); //medeklinkers
-        int numberOfConstantsName2 = CountChars(name2, vowelsArray, true);
-        if (numberOfConstantsName1 == numberOfConstantsName2)
-        {
-            points = points + 20;
-        }
-
-        int numberOfLoveName1 = CountChars(name, loveArray, false);
-        int numberOfLoveName2 = CountChars(name2, loveArray, false);
-
-        if (numberOfLoveName1 != 0) {
-            numberOfLoveName1 = numberOfLoveName1 * 5;
-            points = points + numberOfLoveName1;
-        }
-        if (numberOfLoveName2 != 0)
-        {
-            numberOfLoveName2 = numberOfLoveName2 * 5;
-            points = points + numberOfLoveName2;
-        }
-
-        hartsymbol.HeightRequest = points + 50;
-        string result = points.ToString();
-        TxtResult.Text = result;
     }
 }
 

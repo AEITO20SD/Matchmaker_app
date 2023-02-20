@@ -16,7 +16,12 @@
 
 
 
-
+            <Label
+                Text=""
+                x:Name="error_label"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
 
             <Label
                 Text="Enter 2 names."
